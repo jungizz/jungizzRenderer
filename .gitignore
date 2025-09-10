@@ -34,6 +34,7 @@ Thumbs.db
 *.rc
 /.qmake.cache
 /.qmake.stash
+.cache/*
 
 # QtCreator / qmake / CMake user files
 *.pro.user*
@@ -98,8 +99,6 @@ build.ninja
 # Binaries
 *.dll
 *.exe
-*.dylib
-*.lib
 
 # macOS specific
 .DS_Store
