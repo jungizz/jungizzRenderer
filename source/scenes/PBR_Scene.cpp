@@ -1,23 +1,27 @@
-#include "SSSSS_Scene.h"
+#include "PBR_Scene.h"
 #include <iostream>
 
 using namespace glm;
 
-SSSSS_Scene::SSSSS_Scene()
+PBR_Scene::PBR_Scene()
     : shader(nullptr){}
 
-SSSSS_Scene::~SSSSS_Scene() { 
+PBR_Scene::~PBR_Scene() { 
     delete shader;
 }
 
-void SSSSS_Scene::init(){
+void PBR_Scene::init(){
+
     //모델 로드
-    loadModel("resources/LPS_Head.obj");
+    loadModel("resources/spaceHelmet.obj");
 
     // 텍스처 로드
-    loadTexture("albedo", "resources/LPS_Head_albedo.jpg");
-    loadTexture("normal", "resources/LPS_Head_normal.png");
-    loadTexture("roughness", "resources/LPS_Head_roughness.png");
+    loadTexture("albedo", "resources/spaceHelmet_albedo.png");
+    loadTexture("normal", "resources/spaceHelmet_normal.png");
+    loadTexture("roughness", "resources/spaceHelmet_roughness.png");
+    loadTexture("metal", "resources/spaceHelmet_metal.png");
+    loadTexture("ao", "resources/spaceHelmet_ao.png");
+
 
     // 셰이더 로드
     shader = new Shader("shader/vertex_shader.vert", "shader/fragment_shader.frag");
@@ -29,7 +33,7 @@ void SSSSS_Scene::init(){
     light = new Light(vec3(0.0f, 0.0f, 100.0f), vec3(1.0f), 3.0f);
 }
 
-void SSSSS_Scene::render(const ivec2& framebufferSize){
+void PBR_Scene::render(const ivec2& framebufferSize){
     glViewport(0, 0, framebufferSize.x, framebufferSize.y);
     glClearColor(0, 0, 0, 0);
     glEnable(GL_DEPTH_TEST);
@@ -54,7 +58,12 @@ void SSSSS_Scene::render(const ivec2& framebufferSize){
 
     roughTex->bind(GL_TEXTURE2);
     shader->setInt("roughTex", 2);
-    glActiveTexture(GL_TEXTURE0);
+
+    metalTex->bind(GL_TEXTURE3);
+    shader->setInt("metalTex", 3);
+
+    aoTex->bind(GL_TEXTURE4);
+    shader->setInt("aoTex", 4);
 
     model->draw();
 }

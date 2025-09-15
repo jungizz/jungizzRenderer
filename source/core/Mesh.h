@@ -1,9 +1,9 @@
 #pragma once
-#include <GL/glew.h>
+#include <QOpenGLFunctions>
 #include <glm/glm.hpp>
 #include <vector>
 
-class Mesh {
+class Mesh : protected QOpenGLFunctions {
 public:
     Mesh(const std::vector<glm::vec3>& vertices,
          const std::vector<glm::vec3>& normals,
@@ -11,7 +11,7 @@ public:
          const std::vector<glm::u32vec3>& indices);
     ~Mesh();
 
-    void draw() const;
+    void draw();
 
 private:
     GLuint vao, vboVertices, vboNormals, vboTexcoords, ebo; // buffer ID

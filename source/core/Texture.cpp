@@ -3,7 +3,10 @@
 #include <stb_image.h>
 #include <iostream>
 
-Texture::Texture() : id(0) {}
+Texture::Texture() : id(0) 
+{
+    initializeOpenGLFunctions();
+}
 
 Texture::~Texture() {
     if (id) glDeleteTextures(1, &id);
@@ -32,7 +35,7 @@ bool Texture::loadFromFile(const std::string& path) {
     return true;
 }
 
-void Texture::bind(GLenum textureUnit) const {
+void Texture::bind(GLenum textureUnit) {
     glActiveTexture(textureUnit);
     glBindTexture(GL_TEXTURE_2D, id);
 }

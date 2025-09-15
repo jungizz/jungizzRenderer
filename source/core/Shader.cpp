@@ -21,7 +21,11 @@
 // #endif
 
 Shader::Shader(const std::string& vsPath, const std::string& fsPath) 
-    : programID(0), vertShaderID(0), fragShaderID(0) { load(vsPath, fsPath); }
+    : programID(0), vertShaderID(0), fragShaderID(0) 
+{ 
+    initializeOpenGLFunctions();
+    load(vsPath, fsPath); 
+}
 
 Shader::~Shader() { cleanUp(); }
 
@@ -43,14 +47,17 @@ void Shader::load(const std::string& vsPath, const std::string& fsPath){
     const GLchar* vshaderCode = vertCode.c_str();
     glShaderSource	( vertShaderID, 1, &vshaderCode, nullptr );
     glCompileShader	( vertShaderID );
+    checkCompileErrors(vertShaderID, "VERTEX");
     glAttachShader  ( programID, vertShaderID );
     
     const GLchar* fshaderCode = fragCode.c_str();
     glShaderSource	( fragShaderID, 1, &fshaderCode, nullptr );
     glCompileShader	( fragShaderID );
+    checkCompileErrors(fragShaderID, "FRAGMENT");
     glAttachShader  ( programID, fragShaderID );
     
     glLinkProgram( programID );
+    checkLinkErrors(programID);
 }
 
 void Shader::use(){
@@ -73,6 +80,27 @@ void Shader::setFloat(const std::string &name, float value) {
     glUniform1f(glGetUniformLocation(programID, name.c_str()), value);
 }
 
+void Shader::checkCompileErrors(GLuint shader, const std::string& type) {
+    GLint success;
+    glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+    if (!success) {
+        GLchar infoLog[1024];
+        glGetShaderInfoLog(shader, 1024, nullptr, infoLog);
+        std::cerr << "[ERROR] Shader Compilation (" << type << "):\n" 
+                  << infoLog << std::endl;
+    }
+}
+
+void Shader::checkLinkErrors(GLuint program) {
+    GLint success;
+    glGetProgramiv(program, GL_LINK_STATUS, &success);
+    if (!success) {
+        GLchar infoLog[1024];
+        glGetProgramInfoLog(program, 1024, nullptr, infoLog);
+        std::cerr << "[ERROR] Program Linking:\n" 
+                  << infoLog << std::endl;
+    }
+}
 
 std::string Shader::loadText(const std::string& filename) {
     std::ifstream file(filename);

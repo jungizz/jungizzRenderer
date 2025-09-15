@@ -1,6 +1,4 @@
 #pragma once
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 
 class Camera{
@@ -13,12 +11,16 @@ public:
 
     void setTarget(const glm::vec3& t) { target = t; }
 
-    void cursorPosCallback(GLFWwindow* win, double xpos, double ypos);
-    void scrollCallback(GLFWwindow* win, double xoffset, double yoffset);
+    void mousePressProcess(int button, int action, double xpos, double ypos);
+    void mouseMoveProcess(double xpos, double ypos);
+    void scrollProcess(double delta);
 
 private:
     glm::vec2 lastCursorPos;
     glm::vec3 target; // 카메라가 바라보는 중심점 (패닝 시 이동)
+
+    bool rotating = false;
+    bool panning = false;
 
     float theta, phi; // 수평/수직 회전 각도
     float fovy; // 시야각 (30*PI/100)

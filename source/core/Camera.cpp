@@ -24,44 +24,44 @@ glm::vec3 Camera::getPosition() const{
     return target + glm::vec3(x, y, z);
 }
 
-void Camera::cursorPosCallback(GLFWwindow* win, double xpos, double ypos){
-    Camera* cam = static_cast<Camera*>(glfwGetWindowUserPointer(win));
-    double dx = xpos - cam->lastCursorPos.x;
-    double dy = ypos - cam->lastCursorPos.y;
+void Camera::mousePressProcess(int button, int action, double xpos, double ypos){
+    lastCursorPos = glm::vec2(xpos, ypos);
 
-    int w, h;
-    glfwGetWindowSize(win, &w, &h);
+    if(button == 0) rotating = (action == 1); // Left button
+    else if(button == 1) panning = (action == 1); // Right button
+}
 
-    // 좌클릭 -> 회전
-    if (glfwGetMouseButton(win, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
-        cam->theta -= dx / w * glm::pi<float>(); // 마우스 x축 이동량에 PI 곱하여 라디안 단위로 변환
-        cam->phi += dy / h * glm::pi<float>();   // 마우스 y축 이동량에 PI 곱하여 라디안 단위로 변환
+void Camera::mouseMoveProcess(double xpos, double ypos){
+    double dx = xpos - lastCursorPos.x;
+    double dy = ypos - lastCursorPos.y;
+
+    // Left button -> rotating
+    if (rotating) {
+        theta -= dx * 0.01f;
+        phi += dy * 0.01f;
     }
 
-    // 휠 버튼 -> 패닝
-    if (glfwGetMouseButton(win, GLFW_MOUSE_BUTTON_MIDDLE) == GLFW_PRESS) {
-        float panX = -dx * cam->panSpeed * cam->distance;
-        float panY = dy * cam->panSpeed * cam->distance;
+    // Right button -> panning
+    if (panning) {
+        float panX = -dx * panSpeed * distance;
+        float panY = dy * panSpeed * distance;
 
         // 카메라 right, up 벡터 구하기
-        glm::vec3 eye = cam->getPosition();
-        glm::vec3 forward = glm::normalize(cam->target - eye);
+        glm::vec3 eye = getPosition();
+        glm::vec3 forward = glm::normalize(target - eye);
         glm::vec3 right = glm::normalize(glm::cross(forward, glm::vec3(0,1,0)));
         glm::vec3 up = glm::normalize(glm::cross(right, forward));
 
         // 카메라가 바라보는 중심점 이동
-        cam->target += right * panX + up * panY;
+        target += right * panX + up * panY;
     }    
 
-    cam->lastCursorPos.x = xpos;
-    cam->lastCursorPos.y = ypos;
+    lastCursorPos = glm::vec2(xpos, ypos);
 }
 
-void Camera::scrollCallback(GLFWwindow* win, double xoffset, double yoffset){
-    Camera* cam = static_cast<Camera*>(glfwGetWindowUserPointer(win));
-
-    cam->distance -= static_cast<float>(yoffset) * cam->zoomSpeed; // yoffset: 휠을 위로 올릴 때 양수, 아래로 내릴 때 음수
-    if (cam->distance < cam->minDistance) cam->distance = cam->minDistance;
-    if (cam->distance > cam->maxDistance) cam->distance = cam->maxDistance;
+void Camera::scrollProcess(double delta){
+    distance -= static_cast<float>(delta) * zoomSpeed; // yoffset: 휠을 위로 올릴 때 양수, 아래로 내릴 때 음수
+    if (distance < minDistance) distance = minDistance;
+    if (distance > maxDistance) distance = maxDistance;
 }
 

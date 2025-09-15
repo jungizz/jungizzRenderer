@@ -1,13 +1,9 @@
 #pragma once
+#include <QOpenGLFunctions>
 #include <string>
 #include <glm/glm.hpp>
-#ifdef __APPLE__
-#include "OpenGL/gl3.h"
-#else
-#inclde "gl/glew.h"
-#endif
 
-class Shader{
+class Shader : protected QOpenGLFunctions{
 public:
     Shader(const std::string& vsPath, const std::string& fsPath);
     ~Shader();
@@ -27,4 +23,7 @@ private:
 
     void cleanUp();
     static std::string loadText(const std::string& filename);
+
+    void checkCompileErrors(GLuint shader, const std::string& type);
+    void checkLinkErrors(GLuint program);
 };

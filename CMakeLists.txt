@@ -2,26 +2,29 @@ cmake_minimum_required(VERSION 3.15)
 project(jungizzRenderer)
 
 set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_AUTOMOC ON)   # Qt MOC (Q_OBJECT 매크로) 자동 처리
+set(CMAKE_AUTORCC ON)   # Qt 리소스 파일 자동 처리 (qrc)
+set(CMAKE_AUTOUIC ON)   # Qt UI 파일 자동 처리
 
 # 패키지 찾기 
-find_package(OpenGL REQUIRED)
-find_package(glfw3 3.3 REQUIRED)
-find_package(GLEW REQUIRED)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets OpenGL OpenGLWidgets)
 find_package(assimp REQUIRED)
 
+qt_standard_project_setup()
 
 # 실행 파일 생성
-add_executable(${PROJECT_NAME} 
+qt_add_executable(${PROJECT_NAME} 
     source/main.cpp
-    source/Application.cpp
+    source/scene.cpp
+    source/MainWindow.cpp
+    source/GLWidget.cpp
     source/core/Camera.cpp
     source/core/Shader.cpp
     source/core/Texture.cpp
     source/core/Mesh.cpp
     source/core/Model.cpp
-    source/scenes/BRDF_Scene.cpp
+    source/scenes/PBR_Scene.cpp
     source/scenes/SSSSS_Scene.cpp
-    # 소스 늘어나면 여기에 추가
 )
 
 # include 경로 설정
@@ -35,11 +38,12 @@ target_include_directories(${PROJECT_NAME}
 # 라이브러리 연결
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
-        OpenGL::GL
-        glfw
-        GLEW::GLEW
+        Qt6::Core
+        Qt6::Gui
+        Qt6::Widgets
+        Qt6::OpenGL
+        Qt6::OpenGLWidgets
         assimp::assimp
-
 )
 
 # 컴파일 옵션

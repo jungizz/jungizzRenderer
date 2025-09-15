@@ -1,13 +1,19 @@
-#include "Application.h"
-#include "scenes/BRDF_Scene.h"
-#include "scenes/SSSSS_Scene.h"
+#include <QApplication>
+#include <QSurfaceFormat>
+#include "MainWindow.h"
 
-int main(){
-    Application app(1080, 720, "Rendering Test");
+int main(int argc, char *argv[]){
+    QApplication app(argc, argv);
 
-    //app.setScene(new SSSSS_Scene());
-    app.setScene(new BRDF_Scene());
+    QSurfaceFormat fmt;
+    //fmt.setDepthBufferSize(24);
+    fmt.setVersion(4, 1); // OpenGL 4.1 요청
+    fmt.setProfile(QSurfaceFormat::CoreProfile);
+    QSurfaceFormat::setDefaultFormat(fmt);
 
-    app.run();
-    return 0;
+    MainWindow win;
+    win.resize(1280, 720);
+    win.show();
+
+    return app.exec();
 }

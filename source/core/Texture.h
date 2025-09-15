@@ -1,14 +1,14 @@
 #pragma once
-#include <GL/glew.h>
+#include <QOpenGLFunctions>
 #include <string>
 
-class Texture{
+class Texture : protected QOpenGLFunctions{
 public:
     Texture();
     ~Texture();
 
     bool loadFromFile(const std::string& path);
-    void bind(GLenum textureUnit = GL_TEXTURE0) const;
+    void bind(GLenum textureUnit = GL_TEXTURE0);
     GLuint getID() const { return id; }
     
 private:
