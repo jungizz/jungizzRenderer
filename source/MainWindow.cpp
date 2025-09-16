@@ -181,6 +181,9 @@ void MainWindow::onLoadModel(){
             qDebug() << "Load Texture:" << relativeTexPath;
             m_glWidget->setTexture(type, relativeTexPath);
         }
+        else{ // 텍스처 없는 경우 기본 대체 텍스처 세팅
+            m_glWidget->setTexture(type, "none");
+        }
     }
 
     m_glWidget->update();

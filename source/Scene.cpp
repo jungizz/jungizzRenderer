@@ -33,7 +33,24 @@ void Scene::loadTexture(const QString& type, const QString& path) {
     }
     
     *tex = new Texture();
-    if (!(*tex)->loadFromFile(path.toStdString())) {
+
+    if(path == "none"){
+        glm::vec4 defaultColor;
+        if (type == "albedo") defaultColor = glm::vec4(1, 1, 1, 1);          // 흰색
+        else if (type == "normal") defaultColor = glm::vec4(0.5, 0.5, 1, 1); // default normal
+        else if (type == "roughness") defaultColor = glm::vec4(1, 1, 1, 1);  // rough=1
+        else if (type == "metal") defaultColor = glm::vec4(0, 0, 0, 1);      // 금속=0
+        else if (type == "ao") defaultColor = glm::vec4(1, 1, 1, 1);         // AO=1
+
+        unsigned char data[4] = {
+            static_cast<unsigned char>(defaultColor.r * 255), 
+            static_cast<unsigned char>(defaultColor.g * 255), 
+            static_cast<unsigned char>(defaultColor.b * 255), 
+            static_cast<unsigned char>(defaultColor.a * 255)
+        };
+        (*tex)->create(data, 1, 1);
+    }
+    else if (!(*tex)->loadFromFile(path.toStdString())) {
         qWarning() << "Failed to load texture:" << path;
         delete tex;
         tex = nullptr;

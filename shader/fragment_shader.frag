@@ -82,7 +82,7 @@ void main()
     // specular BRDF
     vec3 f0 = vec3(SKIN_SPEC_REFELCTANCE); // base reflectivity
 
-    float D = D_GGX(NoH, NoH * roughness);
+    float D = D_GGX(NoH, roughness);
     float V = V_SmithGGXCorrelated(NoV, NoL, roughness);
     vec3 F = F_Schlick(LoH, f0);
 
