@@ -11,8 +11,8 @@ public:
     virtual void init() = 0;
     virtual void render(const glm::ivec2& framebufferSize) = 0;
     
-    void loadModel(const QString& path);
-    void loadTexture(const QString& type, const QString& path);
+    void loadModel(const std::string& path);
+    void loadTexture(const std::string& type, const std::string& path);
     Light* getLight() { return light; }
     Camera* getCamera() { return camera; }
 

@@ -5,7 +5,7 @@
 #include <QWheelEvent>
 
 GLWidget::GLWidget(QWidget *parent)
-    : QOpenGLWidget(parent), m_scene(nullptr), m_camera(nullptr){}
+    : QOpenGLWidget(parent), m_scene(nullptr){}
 
 GLWidget::~GLWidget(){
     if(m_scene) delete m_scene;
@@ -17,16 +17,11 @@ void GLWidget::setScene(Scene* scene){
 
     if(context()) { // context가 생긴 이후에만 
         m_scene->init();
-        m_camera = m_scene->getCamera();
     }
 }
 
-void GLWidget::setModel(const QString& path){
+void GLWidget::setModel(const std::string& path){
     if(m_scene) m_scene->loadModel(path);
-}
-
-void GLWidget::setTexture(const QString& type, const QString& path){
-    if(m_scene) m_scene->loadTexture(type, path);
 }
 
 void GLWidget::setLightColor(glm::vec3 color){
@@ -45,7 +40,6 @@ void GLWidget::initializeGL(){
     initializeOpenGLFunctions();
     if(m_scene) {
         m_scene->init();
-        m_camera = m_scene->getCamera();
     }
 }
 
@@ -65,21 +59,25 @@ void GLWidget::paintGL(){
 void GLWidget::mousePressEvent(QMouseEvent *event) {
     int button = (event->button() == Qt::LeftButton) ? 0 : 
                  (event->button() == Qt::RightButton) ? 1 : 2;
-    if (m_camera) m_camera->mousePressProcess(button, 1, event->pos().x(), event->pos().y());
+    if (m_scene && m_scene->getCamera()) 
+        m_scene->getCamera()->mousePressProcess(button, 1, event->pos().x(), event->pos().y());
 }
 
 void GLWidget::mouseReleaseEvent(QMouseEvent *event) {
     int button = (event->button() == Qt::LeftButton) ? 0 : 
                  (event->button() == Qt::RightButton) ? 1 : 2;
-    if (m_camera) m_camera->mousePressProcess(button, 0, event->pos().x(), event->pos().y());
+    if (m_scene && m_scene->getCamera()) 
+        m_scene->getCamera()->mousePressProcess(button, 0, event->pos().x(), event->pos().y());
 }
 
 void GLWidget::mouseMoveEvent(QMouseEvent *event) {
-    if (m_camera) m_camera->mouseMoveProcess(event->pos().x(), event->pos().y());
+    if (m_scene && m_scene->getCamera()) 
+        m_scene->getCamera()->mouseMoveProcess(event->pos().x(), event->pos().y());
     update();
 }
 
 void GLWidget::wheelEvent(QWheelEvent *event) {
-    if (m_camera) m_camera->scrollProcess(event->angleDelta().y()/120.0f); // 한 칸 = ±120
+    if (m_scene && m_scene->getCamera()) 
+        m_scene->getCamera()->scrollProcess(event->angleDelta().y()/120.0f); // 한 칸 = ±120
     update();
 }

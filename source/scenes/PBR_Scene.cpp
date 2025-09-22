@@ -12,19 +12,11 @@ PBR_Scene::~PBR_Scene() {
 
 void PBR_Scene::init(){
 
-    //모델 로드
+    // 모델 로드
     loadModel("resources/spaceHelmet.obj");
 
-    // 텍스처 로드
-    loadTexture("albedo", "resources/spaceHelmet_albedo.png");
-    loadTexture("normal", "resources/spaceHelmet_normal.png");
-    loadTexture("roughness", "resources/spaceHelmet_roughness.png");
-    loadTexture("metal", "resources/spaceHelmet_metal.png");
-    loadTexture("ao", "resources/spaceHelmet_ao.png");
-
-
     // 셰이더 로드
-    shader = new Shader("shader/vertex_shader.vert", "shader/fragment_shader.frag");
+    shader = new Shader("shader/basic_shader.vert", "shader/pbr_shader.frag");
 
     // 카메라 세팅
     setCameraTarget(vec3(0.0f));

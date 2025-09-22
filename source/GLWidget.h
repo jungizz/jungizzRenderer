@@ -11,8 +11,7 @@ public:
     ~GLWidget();
 
     void setScene(Scene* scene);
-    void setModel(const QString& path);
-    void setTexture(const QString& type, const QString& path);
+    void setModel(const std::string& path);
     void setLightColor(glm::vec3 color);
     void setLightPosition(glm::vec3 pos);
     void setLightIntensity(float intensity);
@@ -29,6 +28,5 @@ protected:
 
 private:
     Scene *m_scene;
-    Camera *m_camera;
     int m_width, m_height;
 };

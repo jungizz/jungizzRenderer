@@ -156,35 +156,7 @@ void MainWindow::onLoadModel(){
     if (modelPath.isEmpty()) return;
 
     QString relativeModelPath = QDir(QCoreApplication::applicationDirPath()).relativeFilePath(modelPath);
-    qDebug() << "Load model:" << relativeModelPath;
-    m_glWidget->setModel(relativeModelPath);
-
-    // 텍스처 자동 검색
-    QFileInfo modelInfo(modelPath);
-    QString baseName = modelInfo.completeBaseName(); // "spaceHelmet" (확장자 제거)
-    QString dirPath = modelInfo.absolutePath();
-
-    QStringList textureTypes = {"albedo", "normal", "roughness", "metal", "ao"};
-    QStringList extensions = {"png", "jpg", "jpeg"};
-
-    for(const QString& type : textureTypes){
-        QString texPath;
-        for(const QString& ext : extensions){
-            QString tempPath = dirPath + "/" + baseName + "_" + type + "." + ext;
-            if(QFile::exists(tempPath)){
-                texPath = tempPath;
-                break;
-            }
-        }
-        if(!texPath.isEmpty()){
-            QString relativeTexPath = QDir(QCoreApplication::applicationDirPath()).relativeFilePath(texPath);
-            qDebug() << "Load Texture:" << relativeTexPath;
-            m_glWidget->setTexture(type, relativeTexPath);
-        }
-        else{ // 텍스처 없는 경우 기본 대체 텍스처 세팅
-            m_glWidget->setTexture(type, "none");
-        }
-    }
+    m_glWidget->setModel(relativeModelPath.toStdString());
 
     m_glWidget->update();
 }

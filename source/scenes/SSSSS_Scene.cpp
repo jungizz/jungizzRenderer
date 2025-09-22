@@ -14,13 +14,8 @@ void SSSSS_Scene::init(){
     //모델 로드
     loadModel("resources/LPS_Head.obj");
 
-    // 텍스처 로드
-    loadTexture("albedo", "resources/LPS_Head_albedo.jpg");
-    loadTexture("normal", "resources/LPS_Head_normal.png");
-    loadTexture("roughness", "resources/LPS_Head_roughness.png");
-
     // 셰이더 로드
-    shader = new Shader("shader/vertex_shader.vert", "shader/fragment_shader.frag");
+    shader = new Shader("shader/basic_shader.vert", "shader/pbr_shader.frag");
 
     // 카메라 세팅
     setCameraTarget(vec3(0.0f));
@@ -54,7 +49,12 @@ void SSSSS_Scene::render(const ivec2& framebufferSize){
 
     roughTex->bind(GL_TEXTURE2);
     shader->setInt("roughTex", 2);
-    glActiveTexture(GL_TEXTURE0);
+
+    metalTex->bind(GL_TEXTURE3);
+    shader->setInt("metalTex", 3);
+
+    aoTex->bind(GL_TEXTURE4);
+    shader->setInt("aoTex", 4);
 
     model->draw();
 }
