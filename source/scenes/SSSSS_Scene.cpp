@@ -19,10 +19,10 @@ void SSSSS_Scene::init(const glm::ivec2& framebufferSize){
     loadModel("resources/LPS_Head.obj");
 
     // 셰이더 로드
-    diffShader = new Shader("shader/basic_shader.vert", "shader/diffShader.frag"); // 셰이더 이름 다 바꾸기
-    specShader = new Shader("shader/basic_shader.vert", "shader/specShader.frag");
-    rowBlurShader = new Shader("shader/gaussianBlur.vert", "shader/rowGaussianBlur.frag");
-    colBlurShader = new Shader("shader/gaussianBlur.vert", "shader/colGaussianBlur.frag");
+    diffShader = new Shader("shader/basic_shader.vert", "shader/sssss_diffuse_shader.frag"); // 셰이더 이름 다 바꾸기
+    specShader = new Shader("shader/basic_shader.vert", "shader/sssss_specular_shader.frag");
+    rowBlurShader = new Shader("shader/quad_shader.vert", "shader/sssss_rowBlur_shader.frag");
+    colBlurShader = new Shader("shader/quad_shader.vert", "shader/sssss_colBlur_shader.frag");
 
     // FBO 세팅 (attach)
     diffFBO.init(framebufferSize.x, framebufferSize.y);
