@@ -13,6 +13,14 @@ Scene::~Scene() {
     delete aoTex;
 }
 
+void Scene::beginPass(const glm::ivec2& size, bool useDepth){
+    glViewport(0, 0, size.x, size.y);
+    glClearColor(0, 0, 0, 0);
+    if(useDepth) glEnable(GL_DEPTH_TEST);
+    else glDisable(GL_DEPTH_TEST);
+    glClear(GL_COLOR_BUFFER_BIT | (useDepth ? GL_DEPTH_BUFFER_BIT : 0));
+}
+
 void Scene::loadModel(const string& path) {
     if(model) delete model;
 
@@ -92,3 +100,4 @@ void Scene::setCameraTarget(glm::vec3 target){
     camera = new Camera();
     camera->setTarget(target);
 }
+

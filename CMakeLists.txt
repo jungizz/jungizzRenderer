@@ -23,6 +23,7 @@ qt_add_executable(${PROJECT_NAME}
     source/core/Texture.cpp
     source/core/Mesh.cpp
     source/core/Model.cpp
+    source/core/ScreenQuadMesh.cpp
     source/scenes/PBR_Scene.cpp
     source/scenes/SSSSS_Scene.cpp
 )

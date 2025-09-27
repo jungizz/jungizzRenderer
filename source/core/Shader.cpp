@@ -47,13 +47,13 @@ void Shader::load(const std::string& vsPath, const std::string& fsPath){
     const GLchar* vshaderCode = vertCode.c_str();
     glShaderSource	( vertShaderID, 1, &vshaderCode, nullptr );
     glCompileShader	( vertShaderID );
-    checkCompileErrors(vertShaderID, "VERTEX");
+    checkCompileErrors(vertShaderID, vsPath);
     glAttachShader  ( programID, vertShaderID );
     
     const GLchar* fshaderCode = fragCode.c_str();
     glShaderSource	( fragShaderID, 1, &fshaderCode, nullptr );
     glCompileShader	( fragShaderID );
-    checkCompileErrors(fragShaderID, "FRAGMENT");
+    checkCompileErrors(fragShaderID, fsPath);
     glAttachShader  ( programID, fragShaderID );
     
     glLinkProgram( programID );
@@ -80,13 +80,17 @@ void Shader::setFloat(const std::string &name, float value) {
     glUniform1f(glGetUniformLocation(programID, name.c_str()), value);
 }
 
-void Shader::checkCompileErrors(GLuint shader, const std::string& type) {
+void Shader::setFloat2(const std::string &name, float value1, float value2) {
+    glUniform2f(glGetUniformLocation(programID, name.c_str()), value1, value2);
+}
+
+void Shader::checkCompileErrors(GLuint shader, const std::string& path) {
     GLint success;
     glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
     if (!success) {
         GLchar infoLog[1024];
         glGetShaderInfoLog(shader, 1024, nullptr, infoLog);
-        std::cerr << "[ERROR] Shader Compilation (" << type << "):\n" 
+        std::cerr << "[ERROR] Shader Compilation: " << path << "\n" 
                   << infoLog << std::endl;
     }
 }

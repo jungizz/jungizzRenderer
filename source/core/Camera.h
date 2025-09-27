@@ -9,6 +9,9 @@ public:
     glm::mat4 getProjectionMatrix(float aspect) const;
     glm::vec3 getPosition() const;
 
+    float getFovy() { return fovy; }
+    float getNear() { return minDistance; }
+    float getFar() { return maxDistance; }
     void setTarget(const glm::vec3& t) { target = t; }
 
     void mousePressProcess(int button, int action, double xpos, double ypos);

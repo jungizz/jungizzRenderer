@@ -3,13 +3,18 @@
 #include <stb_image.h>
 #include <iostream>
 
-Texture::Texture() : id(0) 
-{
+Texture::Texture()
+    : id(0), ownsHandle(true){
+    initializeOpenGLFunctions();
+}
+
+Texture::Texture(GLuint existingHandle, bool owns)
+    : id(existingHandle), ownsHandle(owns){
     initializeOpenGLFunctions();
 }
 
 Texture::~Texture() {
-    if (id) glDeleteTextures(1, &id);
+    if (ownsHandle && id) glDeleteTextures(1, &id);
 }
 
 bool Texture::loadFromFile(const std::string& path) {

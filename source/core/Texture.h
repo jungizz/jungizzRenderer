@@ -5,6 +5,7 @@
 class Texture : protected QOpenGLFunctions{
 public:
     Texture();
+    Texture(GLuint existingHandle, bool ownsHandle = false);
     ~Texture();
 
     bool loadFromFile(const std::string& path);
@@ -15,4 +16,5 @@ public:
 private:
     GLuint id;
     int width, height;
+    bool ownsHandle = true;
 };

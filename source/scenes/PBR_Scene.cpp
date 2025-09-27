@@ -10,7 +10,7 @@ PBR_Scene::~PBR_Scene() {
     delete shader;
 }
 
-void PBR_Scene::init(){
+void PBR_Scene::init(const glm::ivec2& framebufferSize){
 
     // 모델 로드
     loadModel("resources/spaceHelmet.obj");
@@ -26,10 +26,7 @@ void PBR_Scene::init(){
 }
 
 void PBR_Scene::render(const ivec2& framebufferSize){
-    glViewport(0, 0, framebufferSize.x, framebufferSize.y);
-    glClearColor(0, 0, 0, 0);
-    glEnable(GL_DEPTH_TEST);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    beginPass(framebufferSize, true);
 
     shader->use();
 

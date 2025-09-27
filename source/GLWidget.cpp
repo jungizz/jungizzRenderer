@@ -16,7 +16,7 @@ void GLWidget::setScene(Scene* scene){
     m_scene = scene;
 
     if(context()) { // context가 생긴 이후에만 
-        m_scene->init();
+        m_scene->init(glm::ivec2(m_width, m_height));
     }
 }
 
@@ -39,7 +39,7 @@ void GLWidget::setLightIntensity(float intensity){
 void GLWidget::initializeGL(){
     initializeOpenGLFunctions();
     if(m_scene) {
-        m_scene->init();
+        m_scene->init(glm::ivec2(m_width, m_height));
     }
 }
 
@@ -47,7 +47,7 @@ void GLWidget::resizeGL(int w, int h){
     qreal dpr = devicePixelRatioF();
     m_width = w * dpr;
     m_height = h * dpr;    
-    glViewport(0, 0, m_width, m_height);
+    if(m_scene) m_scene->resizeFBO(glm::ivec2(m_width, m_height));
 }
 
 void GLWidget::paintGL(){

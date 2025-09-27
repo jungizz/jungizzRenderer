@@ -4,13 +4,16 @@
 #include "core/Texture.h"
 #include "core/Camera.h"
 #include "core/Light.h"
+#include "core/Shader.h"
 
 class Scene{
 public:
     virtual ~Scene();
-    virtual void init() = 0;
+    virtual void init(const glm::ivec2& framebufferSize) = 0;
     virtual void render(const glm::ivec2& framebufferSize) = 0;
-    
+    virtual void resizeFBO(const glm::ivec2& framebufferSize){ } // fbo를 사용하는 자식 씬만 오버라이드 해서 쓰면 됨
+    void beginPass(const glm::ivec2& size, bool useDepth);
+
     void loadModel(const std::string& path);
     void loadTexture(const std::string& type, const std::string& path);
     Light* getLight() { return light; }
