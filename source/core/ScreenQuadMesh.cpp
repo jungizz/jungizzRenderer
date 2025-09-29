@@ -1,6 +1,8 @@
 #include "ScreenQuadMesh.h"
 
 ScreenQuadMesh::ScreenQuadMesh(){
+    initializeOpenGLFunctions(); // QOpenGLFunctions 초기화
+    
     float quadVertices[] = { // 화면 전체에 렌더링하기 위한 사각형 정점 데이터 (삼각형 2개)
         // positions   // texCoords
         -1.0f,  1.0f,  0.0f, 1.0f,  // 왼쪽 상단

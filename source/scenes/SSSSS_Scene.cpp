@@ -31,10 +31,14 @@ void SSSSS_Scene::init(const glm::ivec2& framebufferSize){
     colBlurFBO.init(framebufferSize.x, framebufferSize.y);
 
     // FBO 결과를 받을 텍스처 생성
-    diffFBOColorTex = Texture(diffFBO.colorTexBuffer, false);
-    diffFBODepthTex = Texture(diffFBO.depthBuffer, false);
-    rowBlurFBOColorTex = Texture(rowBlurFBO.colorTexBuffer, false);
-    colBlurFBOColorTex = Texture(colBlurFBO.colorTexBuffer, false);
+    // diffFBOColorTex = Texture(diffFBO.colorTexBuffer, false);
+    // diffFBODepthTex = Texture(diffFBO.depthBuffer, false);
+    // rowBlurFBOColorTex = Texture(rowBlurFBO.colorTexBuffer, false);
+    // colBlurFBOColorTex = Texture(colBlurFBO.colorTexBuffer, false);
+    diffFBOColorTex.warp(diffFBO.colorTexBuffer, false);
+    diffFBODepthTex.warp(diffFBO.depthBuffer, false);
+    rowBlurFBOColorTex.warp(rowBlurFBO.colorTexBuffer, false);
+    colBlurFBOColorTex.warp(colBlurFBO.colorTexBuffer, false);
 
     // 카메라 세팅
     setCameraTarget(vec3(0.0f));
@@ -143,9 +147,9 @@ void SSSSS_Scene::resizeFBO(const glm::ivec2& framebufferSize){
     rowBlurFBO.resize(framebufferSize.x, framebufferSize.y);
     colBlurFBO.resize(framebufferSize.x, framebufferSize.y);
 
-    diffFBOColorTex = Texture(diffFBO.colorTexBuffer, false);
-    diffFBODepthTex = Texture(diffFBO.depthBuffer, false);
-    rowBlurFBOColorTex = Texture(rowBlurFBO.colorTexBuffer, false);
-    colBlurFBOColorTex = Texture(colBlurFBO.colorTexBuffer, false);
+    diffFBOColorTex.warp(diffFBO.colorTexBuffer, false);
+    diffFBODepthTex.warp(diffFBO.depthBuffer, false);
+    rowBlurFBOColorTex.warp(rowBlurFBO.colorTexBuffer, false);
+    colBlurFBOColorTex.warp(colBlurFBO.colorTexBuffer, false);
 }
 
