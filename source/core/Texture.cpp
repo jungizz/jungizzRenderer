@@ -8,11 +8,6 @@ Texture::Texture()
     initializeOpenGLFunctions();
 }
 
-// Texture::Texture(GLuint existingHandle, bool owns)
-//     : id(existingHandle), ownsHandle(owns){
-//     initializeOpenGLFunctions();
-// }
-
 Texture::~Texture() {
     if (ownsHandle && id) glDeleteTextures(1, &id);
 }

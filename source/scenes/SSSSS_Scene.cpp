@@ -31,10 +31,6 @@ void SSSSS_Scene::init(const glm::ivec2& framebufferSize){
     colBlurFBO.init(framebufferSize.x, framebufferSize.y);
 
     // FBO 결과를 받을 텍스처 생성
-    // diffFBOColorTex = Texture(diffFBO.colorTexBuffer, false);
-    // diffFBODepthTex = Texture(diffFBO.depthBuffer, false);
-    // rowBlurFBOColorTex = Texture(rowBlurFBO.colorTexBuffer, false);
-    // colBlurFBOColorTex = Texture(colBlurFBO.colorTexBuffer, false);
     diffFBOColorTex.warp(diffFBO.colorTexBuffer, false);
     diffFBODepthTex.warp(diffFBO.depthBuffer, false);
     rowBlurFBOColorTex.warp(rowBlurFBO.colorTexBuffer, false);

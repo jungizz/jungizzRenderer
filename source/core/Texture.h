@@ -1,11 +1,10 @@
 #pragma once
-#include <QOpenGLFunctions>
+#include <QOpenGLFunctions_4_1_Core>
 #include <string>
 
-class Texture : protected QOpenGLFunctions{
+class Texture : protected QOpenGLFunctions_4_1_Core{
 public:
     Texture();
-    //Texture(GLuint existingHandle, bool ownsHandle = false);
     ~Texture();
 
     void warp(GLuint existingHandle, bool owns);

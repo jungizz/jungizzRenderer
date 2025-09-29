@@ -1,7 +1,7 @@
 #pragma once
-#include <QOpenGLFunctions>
+#include <QOpenGLFunctions_4_1_Core>
 
-class ScreenQuadMesh : protected QOpenGLFunctions{
+class ScreenQuadMesh : protected QOpenGLFunctions_4_1_Core{
 public: 
     ScreenQuadMesh();
     ~ScreenQuadMesh();

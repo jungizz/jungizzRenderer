@@ -1,9 +1,9 @@
 #pragma once
-#include <QOpenGLFunctions>
+#include <QOpenGLFunctions_4_1_Core>
 #include <string>
 #include <glm/glm.hpp>
 
-class Shader : protected QOpenGLFunctions{
+class Shader : protected QOpenGLFunctions_4_1_Core{
 public:
     Shader(const std::string& vsPath, const std::string& fsPath);
     ~Shader();

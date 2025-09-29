@@ -5,7 +5,7 @@ Mesh::Mesh(const std::vector<glm::vec3>& vertices,
             const std::vector<glm::vec2>& texcoords,
             const std::vector<glm::u32vec3>& indices)
 {
-    initializeOpenGLFunctions(); // QOpenGLFunctions 초기화
+    initializeOpenGLFunctions(); // QOpenGLFunctions_4_1_Core 초기화
     
     indexCount = static_cast<GLsizei>(indices.size()*3);
 

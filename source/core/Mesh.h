@@ -1,9 +1,9 @@
 #pragma once
-#include <QOpenGLFunctions>
+#include <QOpenGLFunctions_4_1_Core>
 #include <glm/glm.hpp>
 #include <vector>
 
-class Mesh : protected QOpenGLFunctions {
+class Mesh : protected QOpenGLFunctions_4_1_Core {
 public:
     Mesh(const std::vector<glm::vec3>& vertices,
          const std::vector<glm::vec3>& normals,

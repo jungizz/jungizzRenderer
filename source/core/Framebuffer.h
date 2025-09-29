@@ -1,7 +1,7 @@
 #pragma once
-#include <QOpenGLFunctions>
+#include <QOpenGLFunctions_4_1_Core>
 
-struct FBO : protected QOpenGLFunctions {
+struct FBO : protected QOpenGLFunctions_4_1_Core {
     GLuint framebuffer = 0;
     GLuint colorTexBuffer = 0;
     GLuint depthBuffer = 0;

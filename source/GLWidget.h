@@ -1,10 +1,10 @@
 #pragma once
 #include <QOpenGLWidget>
-#include <QOpenGLFunctions>
+#include <QOpenGLFunctions_4_1_Core>
 #include "Scene.h"
 #include "core/Camera.h"
 
-class GLWidget:public QOpenGLWidget, protected QOpenGLFunctions{
+class GLWidget:public QOpenGLWidget, protected QOpenGLFunctions_4_1_Core{
     Q_OBJECT
 public:
     GLWidget(QWidget *parent = nullptr);
