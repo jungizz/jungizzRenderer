@@ -9,11 +9,12 @@
 class Scene{
 public:
     virtual ~Scene();
-    virtual void init(const glm::ivec2& framebufferSize) = 0;
+    virtual void init(const glm::ivec2& framebufferSize, QOpenGLFunctions_4_1_Core* f) = 0;
     virtual void render(const glm::ivec2& framebufferSize) = 0;
     virtual void resizeFBO(const glm::ivec2& framebufferSize){ } // fbo를 사용하는 자식 씬만 오버라이드 해서 쓰면 됨
     void beginPass(const glm::ivec2& size, bool useDepth);
 
+    void initialize(QOpenGLFunctions_4_1_Core* f);
     void loadModel(const std::string& path);
     void loadTexture(const std::string& type, const std::string& path);
     Light* getLight() { return light; }
@@ -28,6 +29,8 @@ protected:
     Texture* aoTex = nullptr;
     Camera* camera = nullptr;
     Light* light;
+
+    QOpenGLFunctions_4_1_Core* funcs;
 
     void setCameraTarget(glm::vec3 target);
 };

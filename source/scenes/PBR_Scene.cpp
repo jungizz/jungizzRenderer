@@ -10,7 +10,8 @@ PBR_Scene::~PBR_Scene() {
     delete shader;
 }
 
-void PBR_Scene::init(const glm::ivec2& framebufferSize){
+void PBR_Scene::init(const glm::ivec2& framebufferSize, QOpenGLFunctions_4_1_Core* f){
+    initialize(f);
 
     // 모델 로드
     loadModel("resources/spaceHelmet.obj");

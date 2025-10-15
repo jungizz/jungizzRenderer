@@ -13,12 +13,19 @@ Scene::~Scene() {
     delete aoTex;
 }
 
+void Scene::initialize(QOpenGLFunctions_4_1_Core* f) {
+    funcs = f;
+    if (!funcs) {
+        qWarning("Scene::initialize failed: funcs is null!");
+    }
+}
+
 void Scene::beginPass(const glm::ivec2& size, bool useDepth){
-    glViewport(0, 0, size.x, size.y);
-    glClearColor(0, 0, 0, 0);
-    if(useDepth) glEnable(GL_DEPTH_TEST);
-    else glDisable(GL_DEPTH_TEST);
-    glClear(GL_COLOR_BUFFER_BIT | (useDepth ? GL_DEPTH_BUFFER_BIT : 0));
+    funcs->glViewport(0, 0, size.x, size.y);
+    funcs->glClearColor(0, 0, 0, 0);
+    if(useDepth) funcs->glEnable(GL_DEPTH_TEST);
+    else funcs->glDisable(GL_DEPTH_TEST);
+    funcs->glClear(GL_COLOR_BUFFER_BIT | (useDepth ? GL_DEPTH_BUFFER_BIT : 0));
 }
 
 void Scene::loadModel(const string& path) {

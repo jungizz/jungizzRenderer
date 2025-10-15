@@ -14,7 +14,9 @@ SSSSS_Scene::~SSSSS_Scene() {
     delete colBlurShader;
 }
 
-void SSSSS_Scene::init(const glm::ivec2& framebufferSize){
+void SSSSS_Scene::init(const glm::ivec2& framebufferSize, QOpenGLFunctions_4_1_Core* f){
+    initialize(f);
+    
     // 모델 로드
     loadModel("resources/LPS_Head.obj");
 

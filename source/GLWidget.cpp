@@ -16,7 +16,7 @@ void GLWidget::setScene(Scene* scene){
     m_scene = scene;
 
     if(context()) { // context가 생긴 이후에만 
-        m_scene->init(glm::ivec2(m_width, m_height));
+        m_scene->init(glm::ivec2(m_width, m_height), this);
     }
 }
 
@@ -39,7 +39,7 @@ void GLWidget::setLightIntensity(float intensity){
 void GLWidget::initializeGL(){
     initializeOpenGLFunctions();
     if(m_scene) {
-        m_scene->init(glm::ivec2(m_width, m_height));
+        m_scene->init(glm::ivec2(m_width, m_height), this);
     }
 }
 

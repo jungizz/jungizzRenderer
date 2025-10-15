@@ -8,7 +8,7 @@ public:
     SSSSS_Scene();
     ~SSSSS_Scene();
 
-    void init(const glm::ivec2& framebufferSize) override;
+    void init(const glm::ivec2& framebufferSize, QOpenGLFunctions_4_1_Core* f) override;
     void render(const glm::ivec2& framebufferSize) override;
     void resizeFBO(const glm::ivec2& framebufferSize) override;
 

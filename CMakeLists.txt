@@ -52,5 +52,13 @@ target_link_libraries(${PROJECT_NAME}
 add_definitions(-DGL_SILENCE_DEPRECATION)
 
 # 빌드 시 리소스, 쉐이더 코드를 자동으로 build/로 카피하도록 함
-file(COPY ${CMAKE_SOURCE_DIR}/resources DESTINATION ${CMAKE_BINARY_DIR})
-file(COPY ${CMAKE_SOURCE_DIR}/shader DESTINATION ${CMAKE_BINARY_DIR})
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/resources
+        $<TARGET_FILE_DIR:${PROJECT_NAME}>/resources
+)
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/shader
+        $<TARGET_FILE_DIR:${PROJECT_NAME}>/shader
+)
